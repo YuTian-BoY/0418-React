@@ -8,12 +8,12 @@ import Login from './pages/login/login'
 export default class App extends Component {
     render() {
         return(
-            <HashRouter>
+            <BrowserRouter>
                 <Switch> 
                     <Route path="/login" component={Login}/>>
                     <Route path="/admin" component={Admin}/>>
                 </Switch>
-            </HashRouter> 
+            </BrowserRouter> 
         )
     }
 }
