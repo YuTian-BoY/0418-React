@@ -28,3 +28,12 @@
   margin: 120px auto;
   padding: 30px;
 }
+.login .login-content h1 {
+  color: #000;
+  font-size: 25px;
+  text-align: center;
+  font-weight: bold;
+}
+.login .login-content .login-form-button {
+  width: 100%;
+}
