@@ -13,11 +13,23 @@ const Item = Form.Item
 /* 
 登录路由组件
 */
-export default class Login extends Component {
+class Login extends Component {
     handleSubmit = e => {
         e.preventDefault()
+        // 进行表单的统一校验
+        this.props.form.validateFields((err,values)=>{
+            if(!err){
+                alert('校验成功，发送登录的ajax请求')
+            }
+        })
+        // const values = this.props.form.getFieldsValue()
+        // const username = this.props.form.getFieldValue('username')
+        // const pwd = this.props.form.getFieldValue('pwd')
+        // console.log(values, username, pwd)
+        // alert('发送登录的ajax的请求')
     }
     render() {
+        const getFieldDecorator = this.props.form.getFieldDecorator
         return (
             <div className="login">
                 <div className="login-header">
@@ -28,17 +40,43 @@ export default class Login extends Component {
                     <h1>用户登录</h1>
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <Item>
-                            <Input
-                                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                placeholder="请输入用户名"
-                            />
+                            {
+                                getFieldDecorator('username', {
+                                    initialValue:'admin',//初始值
+                                    rules: [
+                                        { required: true,whitespace:true, message: '用户名不能为空!' },
+                                        {min:4,message:'用户名不能小于4位'},
+                                        {max:12,message:'用户名不能大于12位'},
+                                        {pattern:/^[a-zA-Z0-9]+$/,message:'用户名必须是英文、数字或下划线组成！'
+                                                }
+                                    ],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        placeholder="请输入用户名"
+                                    />
+                                )
+                            }
                         </Item>
                         <Item>
-                            <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    type="password"
-                                    placeholder="请输入密码"
-                                />
+                            {
+                                getFieldDecorator('pwd', {
+                                    initialValue:'',
+                                    rules: [
+                                        { required: true,whitespace:true, message: '密码不能为空!' },
+                                        {min:4,message:'密码不能小于4位'},
+                                        {max:12,message:'密码不能大于12位'},
+                                        {pattern:/^[a-zA-Z0-9]+$/,message:'密码必须是英文、数字或下划线组成！'
+                                                }
+                                    ],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        type="password"
+                                        placeholder="请输入密码"
+                                    />
+                                )
+                            }
                         </Item>
                         <Item>
                             <Button type="primary" htmlType="submit" className="login-form-button">
@@ -51,3 +89,29 @@ export default class Login extends Component {
         )
     }
 }
+
+const WrappedLoginForm = Form.create()(Login)
+
+export default WrappedLoginForm
+
+/*
+实例对象：简称对象
+函数对象：将函数作为对象使用
+方法：是特别的属性，属性值是函数
+
+from组件：组件中渲染了<From>
+
+class WrappedLoginForm extends Component{
+
+    render(){
+        return <Login form={强大的对象}></Login>
+    }
+}
+*/
+/* 
+用户名/密码的合法性要求
+1 必须输入
+2 必须大于等于4位
+3 必须小于等于12位
+4 必须是英文、数字、下划线组成
+*/
