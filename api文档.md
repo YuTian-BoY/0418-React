@@ -60,7 +60,7 @@
 ## 2. 添加用户
 
 ### 请求URL：
-	http://localhost:5000/manage/user/add
+	http://localhost:5000/login
 
 ### 请求方式：
 	POST

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom';
 import {
     Form,
     Input,
@@ -8,9 +9,10 @@ import {
 } from 'antd'
 
 import { reqLogin } from '../../api';
-
 import './login.less';
 import logo from './images/logo.png'
+import memoryUtils from '../../utils/memoryUtils'
+import {saveUser} from '../../utils/storageUtils'
 
 const Item = Form.Item
 /* 
@@ -20,23 +22,27 @@ class Login extends Component {
     handleSubmit = e => {
         e.preventDefault()
         // 进行表单的统一校验
-        this.props.form.validateFields( async (err,values)=>{
-            if(!err){
+        this.props.form.validateFields(async (err, values) => {
+            if (!err) {
                 // alert('校验成功，发送登录的ajax请求')
                 // try {
-                    
+
                 // } catch (error) {
-                    
+
                 // }
-                const result =  await reqLogin(values)
-                if (result.status===0) {//登录请求成功
+                const result = await reqLogin(values)
+                if (result.status === 0) {//登录请求成功
                     //得到user
                     const user = result.data
                     //保存user
-
+                    //保存到local
+                    //localStorage.setItem('user_key', JSON.stringify(user))
+                    saveUser(user)
+                    //保存到内存中
+                    memoryUtils.user = user
                     //跳转到admin location/match/history
                     this.props.history.replace('/')
-                }else{//登录请求失败
+                } else {//登录请求失败
                     message.error(result.msg)
                 }
             }
@@ -48,6 +54,10 @@ class Login extends Component {
         // alert('发送登录的ajax的请求')
     }
     render() {
+        //如果当前用户已经登录,自动跳转到admin
+        if (memoryUtils.user._id) {
+            return <Redirect to="/" />
+        }
         const getFieldDecorator = this.props.form.getFieldDecorator
         return (
             <div className="login">
@@ -61,13 +71,14 @@ class Login extends Component {
                         <Item>
                             {
                                 getFieldDecorator('username', {
-                                    initialValue:'admin',//初始值
+                                    initialValue: 'admin',//初始值
                                     rules: [
-                                        { required: true,whitespace:true, message: '用户名不能为空!' },
-                                        {min:4,message:'用户名不能小于4位'},
-                                        {max:12,message:'用户名不能大于12位'},
-                                        {pattern:/^[a-zA-Z0-9]+$/,message:'用户名必须是英文、数字或下划线组成！'
-                                                }
+                                        { required: true, whitespace: true, message: '用户名不能为空!' },
+                                        { min: 4, message: '用户名不能小于4位' },
+                                        { max: 12, message: '用户名不能大于12位' },
+                                        {
+                                            pattern: /^[a-zA-Z0-9]+$/, message: '用户名必须是英文、数字或下划线组成！'
+                                        }
                                     ],
                                 })(
                                     <Input
@@ -80,13 +91,14 @@ class Login extends Component {
                         <Item>
                             {
                                 getFieldDecorator('password', {
-                                    initialValue:'',
+                                    initialValue: '',
                                     rules: [
-                                        { required: true,whitespace:true, message: '密码不能为空!' },
-                                        {min:4,message:'密码不能小于4位'},
-                                        {max:12,message:'密码不能大于12位'},
-                                        {pattern:/^[a-zA-Z0-9]+$/,message:'密码必须是英文、数字或下划线组成！'
-                                                }
+                                        { required: true, whitespace: true, message: '密码不能为空!' },
+                                        { min: 4, message: '密码不能小于4位' },
+                                        { max: 12, message: '密码不能大于12位' },
+                                        {
+                                            pattern: /^[a-zA-Z0-9]+$/, message: '密码必须是英文、数字或下划线组成！'
+                                        }
                                     ],
                                 })(
                                     <Input
@@ -127,7 +139,7 @@ class WrappedLoginForm extends Component{
     }
 }
 */
-/* 
+/*
 用户名/密码的合法性要求
 1 必须输入
 2 必须大于等于4位

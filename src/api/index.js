@@ -7,7 +7,13 @@ import ajax from './ajax'
 登录
 */
 
-export const reqLogin = ({username, password}) => ajax.post('/login', { username, password })
+export const reqLogin = ({
+  username,
+  password
+}) => ajax.post('/login', {
+  username,
+  password
+})
 
 /* 
 2. 添加用户
