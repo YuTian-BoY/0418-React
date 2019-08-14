@@ -4,7 +4,10 @@ import {
     Input,
     Icon,
     Button,
+    message
 } from 'antd'
+
+import { reqLogin } from '../../api';
 
 import './login.less';
 import logo from './images/logo.png'
@@ -17,15 +20,31 @@ class Login extends Component {
     handleSubmit = e => {
         e.preventDefault()
         // 进行表单的统一校验
-        this.props.form.validateFields((err,values)=>{
+        this.props.form.validateFields( async (err,values)=>{
             if(!err){
-                alert('校验成功，发送登录的ajax请求')
+                // alert('校验成功，发送登录的ajax请求')
+                // try {
+                    
+                // } catch (error) {
+                    
+                // }
+                const result =  await reqLogin(values)
+                if (result.status===0) {//登录请求成功
+                    //得到user
+                    const user = result.data
+                    //保存user
+
+                    //跳转到admin location/match/history
+                    this.props.history.replace('/')
+                }else{//登录请求失败
+                    message.error(result.msg)
+                }
             }
         })
         // const values = this.props.form.getFieldsValue()
         // const username = this.props.form.getFieldValue('username')
-        // const pwd = this.props.form.getFieldValue('pwd')
-        // console.log(values, username, pwd)
+        // const password = this.props.form.getFieldValue('password')
+        // console.log(values, username, password)
         // alert('发送登录的ajax的请求')
     }
     render() {
@@ -60,7 +79,7 @@ class Login extends Component {
                         </Item>
                         <Item>
                             {
-                                getFieldDecorator('pwd', {
+                                getFieldDecorator('password', {
                                     initialValue:'',
                                     rules: [
                                         { required: true,whitespace:true, message: '密码不能为空!' },

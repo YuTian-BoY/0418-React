@@ -9,12 +9,13 @@
 3 统一处理请求异常，外部调用者不用再处理请求异常
 */
 import axios from "axios"
-import { promised } from "q";
+import {message} from 'antd'
 const qs = require('qs')
+
 
 // 使用请求拦截器
 axios.interceptors.request.use(config=>{
-    // 1 将 post请求的data对象数据转换为urlencode格式的字符串数据
+    // 1 将 post请求的data对象数据转换为 urlencode 格式的字符串数据
     if (config.method.toUpperCase()==='POST'&& config.data instanceof Object){
         // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         config.data = qs.stringify(config.data)
@@ -29,7 +30,7 @@ axios.interceptors.response.use(
     },
     // 3 统一处理请求异常，外部调用者不用再处理请求异常
     error => {//ajax请求异常
-        alert('请求失败:'+ error.message)
+        message.error('请求失败:'+ error.message)
         //返回一个pending状态的promise ==> 中断promise链
         return new Promise(()=>{})
     }
@@ -44,6 +45,6 @@ axios.interceptors.response.use(
         }
     ) */
 // axios.post('/login','username=admin&password=admin')
-axios.post('/product/add',{name:'xxx',categoryId: 2,price:12})
+// axios.post('/product/add',{name:'xxx',categoryId: 2,price:12})
 
 export default axios

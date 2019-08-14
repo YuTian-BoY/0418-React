@@ -26,7 +26,7 @@
 ## 1. 登陆
 
 ### 请求URL：
-	http://localhost:5000/login
+	http://localhost:5000/manage/user/add
 
 ### 请求方式：
 	POST
