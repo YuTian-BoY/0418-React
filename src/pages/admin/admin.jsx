@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import { Layout } from 'antd';
+
+import LeftNav from '../../components/left-nav'
+import Header from '../../components/header'
 import memoryUtils from '../../utils/memoryUtils'
+const { Footer, Sider, Content } = Layout;
 // 后台管理组件
 export default class Admin extends Component {
     render() {
@@ -12,9 +17,16 @@ export default class Admin extends Component {
             //在事件回调函数中自动跳转：history.push()
         }
         return (
-            <div>
-                Hello {user.username}
-            </div>
+            <Layout style={{height:'100%'}}>
+                <Sider>
+                    <LeftNav/>>
+                </Sider>
+                <Layout>
+                    <Header>Header</Header>
+                    <Content>Content</Content>
+                    <Footer>Footer</Footer>
+                </Layout>
+            </Layout>
         )
     }
 }
