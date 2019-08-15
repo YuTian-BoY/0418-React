@@ -23,8 +23,8 @@ export default class Admin extends Component {
                 </Sider>
                 <Layout>
                     <Header>Header</Header>
-                    <Content>Content</Content>
-                    <Footer>Footer</Footer>
+                    <Content style={{margin:30, background:'white'}}>Content</Content>
+                    <Footer style={{textAlign:'center',color:'#aaa'}}>推荐使用谷歌浏览器，以获得更好的用户体验</Footer>
                 </Layout>
             </Layout>
         )
