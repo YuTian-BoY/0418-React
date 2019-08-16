@@ -10,7 +10,7 @@ import {
 
 import { reqLogin } from '../../api';
 import './login.less';
-import logo from './images/logo.png'
+import logo from '../../assets/images/logo.png'
 import memoryUtils from '../../utils/memoryUtils'
 import {saveUser} from '../../utils/storageUtils'
 
