@@ -49,7 +49,7 @@ class Header extends Component {
       <div className="header">
         <div className='header-top'>
           <span>欢迎😜{user.username} </span>
-          <a href="javascript:;">退出</a>
+          <span>退出</span>
         </div>
         <div className='header-bottom'>
           <div className='header-bottom-left'>{title}</div>
