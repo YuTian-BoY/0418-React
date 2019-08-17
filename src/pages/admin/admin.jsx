@@ -45,7 +45,7 @@ export default class Admin extends Component {
                             <Redirect to='/home' />
                         </Switch>
                     </Content>
-                    <Footer style={{textAlign:'center',color:'#aaa'}}>推荐使用谷歌浏览器，以获得更好的用户体验</Footer>
+                    <Footer style={{ textAlign: 'center', color: '#aaa' }}>🤪推荐使用谷歌浏览器，可以获得最佳页面体验🤪</Footer>
                 </Layout>
             </Layout>
         )
