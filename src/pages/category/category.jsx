@@ -10,12 +10,12 @@ import { reqCategorys } from '../../api'
  * 分类管理
  */
 export default class Category extends Component {
-  stare = {
-    category: []
+  state = {
+    categorys: []
   }
 
   /* 异步获取所有分类列表显示 */
-  getCategory = async () => {
+  getCategorys = async () => {
     const result = await reqCategorys()
     if (result.status === 0) {
       const categorys = result.data
